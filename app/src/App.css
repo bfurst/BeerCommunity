@@ -1,0 +1,109 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+body{
+  background-image: url('beer-background.jpg');
+  background-size: cover; /* prilagođava sliku da prekrije cijelu pozadinu */
+  background-attachment: fixed; /* fiksira sliku prilikom skrolanja */
+  background-position: center; /* centriranje slike */
+  background-repeat: no-repeat
+}
+
+
+.App-body {
+  width: 100%;
+  height: 100%;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+  margin-left: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgb(128, 128, 128);
+  border-radius: 10px;
+}
+
+.brewery-title-container {
+  margin: 50px 0;
+  text-align: center;
+}
+
+.brewery-title {
+  font-family: 'Playfair Display', serif; 
+  font-size: 48px;
+  font-weight: bold;
+  color: white;
+  margin: 0;
+  padding: 0;
+}
+
+@media (max-width: 991px) {
+  /* Kada je ekran sužen, Navbar Collapse prekriva cijelu širinu ekrana */
+  .wide-collapse {
+    position: fixed;
+    top: 7vh; /* Mjesto ispod navbara */
+    left: 0;
+    width: 100%; /* Pokriva cijelu širinu */
+    background-color: white; /* Bijela pozadina */
+    z-index: 999;
+    padding: 10px 0; /* Razmak za sadržaj */
+  }
+
+  /* Linkovi unutar Nav poravnati s lijeve strane */
+  .nav-links-left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-left: 20px; /* Dodatna margina s lijeve strane */
+  }
+
+  /* Stilizacija linkova za bolje iskustvo na suženom ekranu */
+  .nav-links-left .nav-link {
+    margin: 10px 0;
+    font-size: 1.1rem; /* Blago povećanje veličine fonta */
+  }
+}

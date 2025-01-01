@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Permanent Access Restriction Notification</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            text-align: center;
+            padding: 20px 0;
+            background-color: #d9534f;
+            color: white;
+        }
+        .content {
+            padding: 20px;
+            text-align: left;
+            color: #000000;
+        }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 12px;
+            color: #999999;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Permanent Access Restriction Notification</h1>
+        </div>
+        <div class="content">
+            <p>Dear <span th:text="${username}"></span>,</p>
+            <p>We regret to inform you that your account has been permanently restricted from accessing our platform. Below are the details:</p>
+            
+            <p><strong>Reason for restriction:</strong> <span th:text="${restrictionDescription}"></span></p>
+
+            <p>This decision was made in accordance with our community guidelines and terms of service to ensure the safety and integrity of our community.</p>
+            <p>Please note that this action is final and cannot be reversed. However, if you have any questions or concerns regarding this decision, feel free to reach out to us at <a href="mailto:admin@revbeer.info">admin@revbeer.info</a>.</p>
+            <p>We appreciate your understanding.</p>
+            <p>Sincerely,</p>
+            <p>The BeerCommunity Team</p>
+        </div>
+        <div class="footer">
+            <p>If you have further questions, contact us at <a href="mailto:admin@revbeer.info">admin@revbeer.info</a>.</p>
+            <p>&copy; 2024 BeerCommunity. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>

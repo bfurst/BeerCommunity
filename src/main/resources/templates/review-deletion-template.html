@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Review Deletion Notification</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            text-align: center;
+            padding: 20px 0;
+            background-color: #0078d7;
+            color: white;
+        }
+        .content {
+            padding: 20px;
+            text-align: left;
+            color: #000000;
+        }
+        .comment-box {
+            background-color: #f9f9f9;
+            border-left: 4px solid #0078d7;
+            padding: 10px 15px;
+            margin: 15px 0;
+            font-style: italic;
+            color: #555555;
+        }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 12px;
+            color: #999999;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Comment Deletion Notification</h1>
+        </div>
+        <div class="content">
+            <p>Dear <span th:text="${username}"></span>,</p>
+            <p>We wanted to inform you that your comment, posted on <strong th:text="${reviewPostingDate}"></strong>, has been deleted. Here is the text of your comment:</p>
+            
+            <div class="comment-box">
+                <span th:text="${reviewDescription}"></span>
+            </div>
+
+            <p><strong>Reason for deletion:</strong> <span th:text="${adminDescription}"></span></p>
+            <p>If you have any questions or believe this action was taken in error, please do not hesitate to contact us.</p>
+            <p>Thank you for your understanding,</p>
+        </div>
+        <div class="footer">
+            <p>If you need assistance, contact us at <a href="mailto:admin@revbeer.info">admin@revbeer.info</a>.</p>
+            <p>&copy; 2024 BeerCommunity. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>
+

@@ -1,0 +1,19 @@
+.register-label{
+    font-size: 18px;
+}
+
+.validation-error{
+    font-size: small !important;
+}
+
+/*
+.outline{
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    border-radius: 0.4rem;
+    border-color: #80bdff !important;
+    transition: border-color 0.15s ease-in;
+}*/
+
+::-ms-reveal {
+    display: none;
+  }

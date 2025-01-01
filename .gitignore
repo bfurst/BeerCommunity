@@ -1,0 +1,24 @@
+# Spring Boot
+target/
+*.log
+*.class
+*.iml
+.idea/
+.settings/
+.classpath
+.project
+
+# React.js
+node_modules/
+build/
+dist/
+*.log
+.env
+
+# OS specifične datoteke
+.DS_Store
+Thumbs.db
+
+# Generalni editori
+.vscode/
+

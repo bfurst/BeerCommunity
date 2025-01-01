@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Reactivation Notification</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            text-align: center;
+            padding: 20px 0;
+            background-color: #5cb85c;
+            color: white;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+        .content {
+            padding: 20px;
+            color: #333333;
+            line-height: 1.6;
+        }
+        .content p {
+            margin: 10px 0;
+        }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 12px;
+            color: #999999;
+        }
+        a {
+            color: #5cb85c;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Account Reactivated</h1>
+        </div>
+        <div class="content">
+            <p>Dear <span th:text="${username}"></span>,</p>
+            <p>We are pleased to inform you that your account has been reactivated and your access to our platform has been restored. The restriction placed on your account has been lifted ahead of the original expiration date.</p>
+            <p>If you have any questions or require further assistance, feel free to reach out to us at <a href="mailto:admin@revbeer.info">admin@revbeer.info</a>.</p>
+            <p>Thank you for being a valued member of our community.</p>
+            <p>Sincerely,</p>
+            <p>The BeerCommunity Team</p>
+        </div>
+        <div class="footer">
+            <p>If you need assistance, contact us at <a href="mailto:admin@revbeer.info">admin@revbeer.info</a>.</p>
+            <p>&copy; 2024 YourCompany. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>

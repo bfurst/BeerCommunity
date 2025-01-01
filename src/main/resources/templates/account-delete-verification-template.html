@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Delete Verification</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            text-align: center;
+            padding: 20px 0;
+            background-color: red;
+            color: white;
+        }
+
+        .content {
+            padding: 20px;
+            text-align: center;
+            color: #000000;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white !important;
+            background-color: red;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 12px;
+            color: #999999;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Account Delete Verification</h1>
+        </div>
+        <div class="content">
+            <p>Hello,</p>
+            <p>We have received a request to permanently delete your account associated with this email address. Before
+                we proceed, we need to confirm that you made this request.</p>
+            <p>If you wish to delete your account, please click the link below to confirm: </p>
+            <a th:href="${url}" class="button">Delete Account</a>
+            <p>Once you confirm, your account and all associated data will be permanently deleted and cannot be
+                recovered. If you change your mind, you can cancel this request by ignoring this email</p>
+        </div>
+        <div class="footer">
+            <p>&copy; 2024 BeerCommunity. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+
+</html>
