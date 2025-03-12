@@ -13,7 +13,7 @@ import { createQuery } from '../services/Api';
 import TextBox from '../components/TextBox';
 
 export default function AboutUs() {
-    const navigate = useNavigate();
+    const navigation = useNavigate();
 
     const [email, setEmail] = useState("");
     const [emailValid, setEmailValid] = useState(false);
@@ -47,7 +47,7 @@ export default function AboutUs() {
                 setQueryResponseInfo("Message sent successfully. We will answer you soon.");
             }
         } catch {
-            navigate("/error");
+            navigation("/error");
         }
     };
 

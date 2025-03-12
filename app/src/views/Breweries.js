@@ -55,8 +55,7 @@ export default function Breweries() {
 
             setCountries([defaultOption, ...countries]);
         } catch {
-            //
-            navigation("/error", {});
+            navigation("/error");
         }
     };
 
@@ -82,7 +81,7 @@ export default function Breweries() {
             setLength(breweries["length"]);
             setDisplayData(breweries["data"]);
         } catch {
-            //
+            navigation("/error");
         }
     };
 
@@ -94,7 +93,7 @@ export default function Breweries() {
             setLength(breweries["length"]);
             setDisplayData(breweries["data"]);
         } catch {
-            //
+            navigation("/error");
         }
     }
 

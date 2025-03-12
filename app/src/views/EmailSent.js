@@ -10,15 +10,15 @@ import AccountDeleteNotificationSent from '../components/AccountDeleteNotificati
 
 const EmailSent = () => {
     const location = useLocation();
-    const navigate = useNavigate();
+    const navigation = useNavigate();
 
     const { type, email } = location.state || {};
 
     useEffect(() => {
         if (!email || !type) {
-            navigate("/error");
+            navigation("/error");
         }
-    }, [email, type, navigate]);
+    }, [email, type, navigation]);
 
     const renderNotificationComponent = () => {
         switch (type) {

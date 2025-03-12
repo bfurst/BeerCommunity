@@ -29,7 +29,7 @@ export default function Home() {
             const favorites = await getFavorites();
             setFavorites(favorites);
         } catch {
-            navigation("/error", {})
+            navigation("/error");
         }
     };
 
@@ -38,7 +38,7 @@ export default function Home() {
             const breweries = await getTopBreweries();
             setTopBreweries(breweries);
         } catch {
-            navigation("/error", {})
+            navigation("/error");
         }
     };
 
@@ -47,7 +47,7 @@ export default function Home() {
             const beers = await getTopBeers();
             setTopBeers(beers);
         } catch {
-            navigation("/error", {})
+            navigation("/error");
         }
     };
 
@@ -56,7 +56,7 @@ export default function Home() {
             const beers = await getRandomNewBeers();
             setNewBeers(beers);
         } catch {
-            navigation("/error", {})
+            navigation("/error");
         }
     };
 

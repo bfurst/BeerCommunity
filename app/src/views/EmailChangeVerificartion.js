@@ -22,8 +22,7 @@ export default function EmailChangeVerification() {
         try{
             await changeEmail(token);
         } catch (exception){
-            // log
-            navigation("/error", {});
+            navigation("/error");
         }
     };
 

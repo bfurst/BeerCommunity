@@ -12,7 +12,7 @@ import { userExistsByEmail, sendResetPswdToken } from '../services/Api';
 import TextBox from '../components/TextBox';
 
 export default function ForgotPassword() {
-    const navigate = useNavigate();
+    const navigation = useNavigate();
 
     const [email, setEmail] = useState("");
     const [emailValid, setEmailValid] = useState(false);
@@ -27,11 +27,11 @@ export default function ForgotPassword() {
             const userExists = await userExistsByEmail(email);
 
             if (userExists)
-                navigate("/verification-required", { state: { email, type: "pswd-reset" } });
+                navigation("/verification-required", { state: { email, type: "pswd-reset" } });
 
             setConfirmMsg("Email address not found or not confirmed.");
         } catch (error) {
-            navigate("/error", {});
+            navigation("/error");
         }
     };
 

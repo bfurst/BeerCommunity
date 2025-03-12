@@ -10,19 +10,19 @@ import { completeRegistration } from '../services/Api';
 
 const EmailVerification = () => {
     const { token } = useParams();
-    const navigate = useNavigate();
+    const navigation = useNavigate();
 
     useEffect(() => {
         const finishRegistration = async () => {
             try {
                 await completeRegistration(token);
             } catch (exception) {
-                navigate("/error", {});
+                navigation("/error");
             }
         };
 
         finishRegistration();
-    }, [token, navigate]);
+    }, [token, navigation]);
 
     return (
         <Container className="d-flex mt-auto justify-content-center">
@@ -35,7 +35,7 @@ const EmailVerification = () => {
                         Thank you for confirming your email address. Your registration is now complete!
                     </div>
                     <Form id="register-form" style={{ textAlign: 'center' }}>
-                        <Button variant="outline-primary w-25" type="button" onClick={() => navigate("/login", {})}>
+                        <Button variant="outline-primary w-25" type="button" onClick={() => navigation("/login")}>
                             Login
                         </Button>
                     </Form>

@@ -49,7 +49,7 @@ export default function Login() {
                 setLoginMessage("Login failed. Please, check entered data and try again.");
 
         } catch {
-            navigation("/error", {});
+            navigation("/error");
         }
     }
 

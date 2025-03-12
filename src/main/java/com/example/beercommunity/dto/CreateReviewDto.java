@@ -2,11 +2,21 @@ package com.example.beercommunity.dto;
 
 public class CreateReviewDto {
 
+    private Integer id;
+
     private Integer beerId;
 
     private Integer rating;
 
     private String description;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public Integer getBeerId() {
         return beerId;
@@ -31,7 +41,7 @@ public class CreateReviewDto {
     public void setDescription(String description) {
         this.description = description;
     }
-    
+
     @Override
     public String toString() {
         return "CreateReviewDto{" +

@@ -486,13 +486,16 @@ public class DefaultController {
     }
 
     @RequestMapping(value = "/reviews", method = RequestMethod.PUT)
+    @SuppressWarnings("StringEquality")
     public ResponseEntity<Review> updateReview(HttpServletRequest httpServletRequest,
             @RequestBody CreateReviewDto reviewDto) throws CustomExceptions.ResourceNotFoundException {
 
         User user = getUserFromJwtToken(httpServletRequest);
-        Optional<Review> review = funcService.getReview(user.getId(), reviewDto.getBeerId());
+        Optional<Review> review = funcService.getReview(reviewDto.getId());
 
         if (!review.isPresent())
+            throw new CustomExceptions.ResourceNotFoundException();
+        else if (review.get().getUser().getId() != user.getId())
             throw new CustomExceptions.ResourceNotFoundException();
 
         review.get().setRating(reviewDto.getRating());
@@ -521,7 +524,7 @@ public class DefaultController {
     }
 
     private User getUserFromJwtToken(HttpServletRequest httpServletRequest) {
-        
+
         String authHeader = httpServletRequest.getHeader("Authorization");
         String username = JwtUtil.extractUsername(authHeader.substring(7));
 

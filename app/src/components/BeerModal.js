@@ -127,7 +127,7 @@ function BeerModal(props) {
   };
 
   if (shades === null || displayShade === '' || categories === null || displayCategory === '')
-    return <Loading />
+    return;
 
   return (
     <Modal
@@ -138,7 +138,7 @@ function BeerModal(props) {
       centered
     >
       <Modal.Header>
-        <Modal.Title>Dodaj novu pivu</Modal.Title>
+        <Modal.Title>Add new beer item</Modal.Title>
         <button type="button" className="btn-close" aria-label="Close" onClick={() => props.onClose()}></button>
       </Modal.Header>
       <Modal.Body>
@@ -168,7 +168,7 @@ function BeerModal(props) {
                     }}
                   />
                 ) : (
-                  <p>Povucite sliku ovdje ili kliknite za učitavanje</p>
+                  <p>Drag & drop the image here or click to upload</p>
                 )}
               </div>
               <p className="text-danger" style={{ fontSize: 10 }}>{fileErrorMsg}</p>

@@ -1,7 +1,3 @@
-//https://www.google.com/recaptcha/admin/site/701323429/setup
-//secret 6LelWM0pAAAAAM6qTHwsnfAMRkECQXA6XilRdHIS
-//site 6LelWM0pAAAAAE0Tnf0qjByC7PlfAMruZfS6N806
-
 import Card from 'react-bootstrap/Card';
 import '../styles/style.css';
 import * as Icon from 'react-bootstrap-icons';
@@ -41,7 +37,7 @@ export default function AdminNews() {
             setData(news["data"]);
 
         } catch {
-
+            navigation("/error");
         }
     }
 
@@ -51,7 +47,7 @@ export default function AdminNews() {
             setPage(1);
             getNewsData(1);
         } catch {
-            //
+            navigation("/error");
         }
     };
 
@@ -63,7 +59,7 @@ export default function AdminNews() {
             setLength(news["length"]);
             setData(news["data"]);
         } catch {
-            //
+            navigation("/error");
         }
     }
 
@@ -89,7 +85,7 @@ export default function AdminNews() {
             await createNews(formData);
             getNewsData(page);
         } catch {
-
+            navigation("/error");
         }
     }
 
@@ -134,7 +130,7 @@ export default function AdminNews() {
             }
 
         } catch {
-
+            navigation("/error");
         }
     }
 

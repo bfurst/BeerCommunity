@@ -556,7 +556,7 @@ public class AdminController {
     private User getUserFromJwtToken(HttpServletRequest httpServletRequest) {
         String authHeader = httpServletRequest.getHeader("Authorization");
         String username = JwtUtil.extractUsername(authHeader.substring(7));
-        
+
         return accountManagementService.getUserByUsername(username).get();
     }
 }

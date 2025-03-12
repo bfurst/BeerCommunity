@@ -7,7 +7,7 @@ import { useAuth } from './AuthContext';
 import { Button, Dropdown, Col, Row } from 'react-bootstrap';
 import Modal from 'react-bootstrap/Modal';
 import * as Icon from 'react-bootstrap-icons';
-import { createReviewDislike, createReviewLike, deleteReview, getReviews, removeReviewDislike, removeReviewLike } from '../services/Api';
+import { createReview, createReviewDislike, createReviewLike, createReviewReport, deleteReview, getReviews, removeReviewDislike, removeReviewLike, updateReview } from '../services/Api';
 import { parse, format } from 'date-fns';
 import ReportCommentModal from './ReportCommentModal';
 import WriteReviewModal from './WriteReviewModal';
@@ -23,7 +23,8 @@ const CommentsModal = (props) => {
   const [sortOrder, setSortOrder] = React.useState('newest');
   const [showReportModal, setShowReportModal] = React.useState(false);
   const [selectedReview, setSelectedReview] = React.useState(null);
-  const [showReviewModal, setShowReviewModal] = React.useState(false);
+  const [showAddReviewModal, setShowAddReviewModal] = React.useState(false);
+  const [showUpdateReviewModal, setShowUpdateReviewModal] = React.useState(false);
   const [showConfirmModal, setShowConfirmModal] = React.useState(false);
   const [usersReview, setUsersReview] = React.useState(null);
 
@@ -35,10 +36,10 @@ const CommentsModal = (props) => {
   };
 
   useEffect(() => {
-    fill();
+    getReviewsData();
   }, [props.data, sortOrder])
 
-  const fill = async () => {
+  const getReviewsData = async () => {
     try {
       if (props.data !== null) {
         const reviews = await getReviews(props.data.id, sortOrder);
@@ -121,6 +122,49 @@ const CommentsModal = (props) => {
       return parseInt(daysDiff / 365) + " years ago";
   };
 
+  const addReview = async (data) => {
+    try {
+
+      const review = {
+        "rating": data["rating"],
+        "description": data["description"],
+        "beerId": props.data.id
+      };
+
+      await createReview(review);
+      setShowAddReviewModal(false);
+      getReviewsData();
+
+      props.onShow();
+    } catch {
+      navigation("/error");
+    }
+  }
+
+  const changeReview = async (data) => {
+    try {
+
+      const review = {
+        "id": selectedReview.id,
+        "rating": data["rating"],
+        "description": data["description"],
+      };
+
+      await updateReview(review);
+      const displayDataUpdated = displayData.map((review) =>
+        review.id === selectedReview.id ? { ...review, rating: data["rating"], description: data["description"] } : review
+      );
+
+      setDisplayData(displayDataUpdated);
+      setSelectedReview(null);
+      setShowUpdateReviewModal(false);
+
+      props.onShow();
+    } catch {
+      navigation("/error");
+    }
+  }
+
   const removeReview = async () => {
     try {
       await deleteReview(usersReview.id);
@@ -131,7 +175,7 @@ const CommentsModal = (props) => {
       setShowConfirmModal(false);
       props.onShow();
     } catch {
-      navigation("/error", {});
+      navigation("/error");
     }
   };
 
@@ -152,7 +196,7 @@ const CommentsModal = (props) => {
       setDisplayData(data);
       await createReviewLike(id);
     } catch {
-      navigator("/error", {});
+      navigator("/error");
     }
   }
 
@@ -171,7 +215,7 @@ const CommentsModal = (props) => {
       setDisplayData(data);
       await removeReviewLike(id);
     } catch {
-      navigation("/error", {});
+      navigation("/error");
     }
   }
 
@@ -192,7 +236,7 @@ const CommentsModal = (props) => {
       setDisplayData(data);
       await createReviewDislike(id);
     } catch {
-      navigation("/error", {});
+      navigation("/error");
     }
   }
 
@@ -211,25 +255,34 @@ const CommentsModal = (props) => {
       setDisplayData(data);
       await removeReviewDislike(id);
     } catch {
-      navigation("/error", {});
+      navigation("/error");
     }
   }
 
-  const handleReviewReportSent = () => {
+  const reportReview = async (data) => {
     try {
-      const data = displayData.map(review =>
+
+      const report = {
+        "reviewId": selectedReview.id,
+        "categoryId": data["categoryId"],
+        "description": data["description"]
+      };
+
+      await createReviewReport(report);
+
+      const updatedDisplayData = displayData.map(review =>
         review.id === selectedReview.id ?
-          { ...review, IsReported: true, } :
+          { ...review, isReported: true, } :
           review
       );
 
       setSelectedReview(null);
       setShowReportModal(false);
-      setDisplayData(data);
+      setDisplayData(updatedDisplayData);
 
       props.onShow();
     } catch {
-      navigation("/error", {});
+      navigation("/error");
     }
   }
 
@@ -240,16 +293,22 @@ const CommentsModal = (props) => {
     setShowReportModal(true);
   };
 
-  const handleReviewAdded = () => {
-    setSelectedReview(null);
-    setShowReviewModal(false);
-    fill();
+  const closeModal = () => {
+    props.onClose();
 
-    props.onShow();
+    setTimeout(() => {
+      setDisplayData(null);
+      setSortOrder('newest');
+      setShowReportModal(false);
+      setSelectedReview(null);
+      setShowAddReviewModal(false);
+      setShowConfirmModal(false);
+      setUsersReview(null);
+    }, 300);
   };
 
   if (props.data == null || displayData === null)
-    return <Loading />
+    return;
 
   return (
     <div>
@@ -264,14 +323,14 @@ const CommentsModal = (props) => {
           <Modal.Title className="me-auto text-nowrap" id="contained-modal-title-vcenter">
             {props.data.name}
           </Modal.Title>
-          <button type="button" class="btn-close" aria-label="Close" onClick={() => props.onClose()}></button>
+          <button type="button" class="btn-close" aria-label="Close" onClick={closeModal}></button>
           <div className="d-flex flex-column justify-content-end flex-md-row w-100 gap-2">
             <Button
               className="w-100 w-md-auto"
               disabled={usersReview !== undefined}
               style={{ backgroundColor: "purple", borderColor: "purple", width: "140px", minWidth: "140px" }}
               onClick={() => {
-                setShowReviewModal(true);
+                setShowAddReviewModal(true);
                 props.onHide();
               }}
             >
@@ -300,12 +359,14 @@ const CommentsModal = (props) => {
                   <div className="mb-3">
                     <div className="d-flex flex-row align-items-center gap-3">
                       <Col>
-                        <img
-                          src={"https://localhost/uploads/profile/" + review.reviewerProfileImage}
-                          className="rounded-circle"
-                          style={{ width: "24px", height: "24px", objectFit: "cover" }}
-                        />
-                        <h5>{review.reviewerUsername}</h5>
+                        <div className="d-flex flex-row align-items-center gap-3">
+                          <img
+                            src={"https://localhost/uploads/profile/" + review.reviewerProfileImage}
+                            className="rounded-circle"
+                            style={{ width: "24px", height: "24px", objectFit: "cover" }}
+                          />
+                          <h5>{review.reviewerUsername}</h5>
+                        </div>
                         <h6 className="d-flex align-items-center"><i style={{ color: "grey" }}>{calculateTime(review.createdAt)}</i></h6>
                       </Col>
                       {calculateStars(review.rating)}
@@ -345,7 +406,7 @@ const CommentsModal = (props) => {
                       {
                         usersReview !== undefined && usersReview.id === review.id ?
                           <div className="d-flex ms-auto gap-3">
-                            <Icon.Pencil className="ms-auto" color="black" cursor="pointer" size={24} title="Edit review" onClick={() => { setShowReviewModal(true); setSelectedReview(review); props.onHide() }} />
+                            <Icon.Pencil className="ms-auto" color="black" cursor="pointer" size={24} title="Edit review" onClick={() => { setShowUpdateReviewModal(true); setSelectedReview(review); props.onHide() }} />
                             <Icon.Trash3 className="ms-auto" color="red" cursor="pointer" size={24} title="Delete review" onClick={() => { setShowConfirmModal(true); props.onHide() }} />
                           </div>
                           :
@@ -367,20 +428,26 @@ const CommentsModal = (props) => {
         </Modal.Body>
       </Modal>
       <WriteReviewModal
-        show={showReviewModal}
-        beerId={props.data.id}
+        show={showAddReviewModal}
         data={selectedReview}
-        onHide={() => { setShowReviewModal(false); props.onShow() }}
-        onClose={() => { setShowReviewModal(false); setSelectedReview(null); props.onShow() }}
-        onReviewAdded={handleReviewAdded}
+        onConfirm={addReview}
+        onHide={() => { setShowAddReviewModal(false); props.onShow() }}
+        onClose={() => { setShowAddReviewModal(false); setSelectedReview(null); props.onShow() }}
+      />
+
+      <WriteReviewModal
+        show={showUpdateReviewModal}
+        data={selectedReview}
+        onConfirm={changeReview}
+        onHide={() => { setShowUpdateReviewModal(false); props.onShow() }}
+        onClose={() => { setShowUpdateReviewModal(false); setSelectedReview(null); props.onShow() }}
       />
 
       <ReportCommentModal
         show={showReportModal}
-        id={selectedReview !== null && selectedReview.id}
         onHide={() => { setShowReportModal(false); props.onShow() }}
         onClose={() => { setShowReportModal(false); props.onShow() }}
-        onReportSent={handleReviewReportSent}
+        onConfirm={reportReview}
       />
 
       <ConfirmModal

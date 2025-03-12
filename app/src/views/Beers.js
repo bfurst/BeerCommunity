@@ -10,7 +10,6 @@ import { Container, Row, Col, Form, FormControl, Button, Dropdown, DropdownButto
 import Pagination from '../components/Pagination';
 import CommentsModal from '../components/CommentsModal';
 import { useLocation, Link, useParams, useNavigate } from 'react-router-dom';
-import { Loading } from '../components/Loading';
 
 export default function Beers() {
     const { id } = useParams();
@@ -21,11 +20,9 @@ export default function Beers() {
     const [displayData, setDisplayData] = React.useState(null);
     const [searchTerm, setSearchTerm] = React.useState('');
     const [sortOrder, setSortOrder] = React.useState('favorites');
-    const [categories, setCategories] = React.useState(null);
     const [category, setCategory] = React.useState('0');
     const [displayCategories, setDisplayCategories] = React.useState(null);
     const [displayCategory, setDisplayCategory] = React.useState('');
-    const [shades, setShades] = React.useState(null);
     const [shade, setShade] = React.useState('0');
     const [displayShades, setDisplayShades] = React.useState(null);
     const [displayShade, setDisplayShade] = React.useState('');
@@ -69,7 +66,7 @@ export default function Beers() {
             const brewery = await getBrewery(id);
             setBrewery(brewery);
         } catch {
-            //
+            navigation("/error");
         }
     };
 
@@ -79,8 +76,6 @@ export default function Beers() {
         const beers = await getBeers(id, pageNumber, searchTerm, sortOrder, category, shade);
         setLength(beers["length"]);
         setDisplayData(beers["data"]);
-        setCategories(categories);
-        setShades(shades);
 
         const defaultCategoryOption = {
             "id": 0,
@@ -132,7 +127,7 @@ export default function Beers() {
             setLength(beers["length"]);
             setDisplayData(beers["data"]);
         } catch {
-            //
+            navigation("/error");
         }
     };
 
@@ -144,7 +139,7 @@ export default function Beers() {
             setLength(beers["length"]);
             setDisplayData(beers["data"]);
         } catch {
-            //
+            navigation("/error");
         }
     }
 
@@ -164,7 +159,7 @@ export default function Beers() {
 
             sortData(newData);
         } catch {
-            //
+            navigation("/error");
         }
     }
 
@@ -179,12 +174,12 @@ export default function Beers() {
 
             sortData(newData);
         } catch {
-            //
+            navigation("/error");
         }
     }
 
     if (displayData === null || brewery === null || displayCategories === null || displayShades === null)
-        return <Loading />;
+        return;
 
     return (
         <Container className="d-flex flex-column justify-content-center">
@@ -346,7 +341,13 @@ export default function Beers() {
                 />
             }
 
-            <CommentsModal show={showComments} data={selectedBeer} onShow={() => setShowComments(true)} onClose={() => setShowComments(false)} onHide={() => setShowComments(false)} />
+            <CommentsModal
+                show={showComments}
+                data={selectedBeer}
+                onShow={() => setShowComments(true)}
+                onClose={() => { setShowComments(false); setSelectedBeer(null) }}
+                onHide={() => setShowComments(false)}
+            />
         </Container>
     );
 }

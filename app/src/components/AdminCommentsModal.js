@@ -16,6 +16,7 @@ import AdminDeleteReviewModal from './DeleteUsersReviewModal';
 import IssueRestrictionModal from './IssueRestrictionModal';
 import UnlockUserModal from './UnlockUserModal';
 import { Loading } from './Loading';
+import { useNavigate } from 'react-router-dom';
 
 const AdminCommentsModal = (props) => {
   const { user } = useAuth();
@@ -51,7 +52,7 @@ const AdminCommentsModal = (props) => {
         sortData(reviews);
       }
     } catch {
-      navigation("/error", {});
+      navigation("/error");
     }
   };
 
@@ -141,7 +142,7 @@ const AdminCommentsModal = (props) => {
       getReviewsData();
       props.onShow();
     } catch {
-      navigation("/error", {});
+      navigation("/error");
     }
   }
 
@@ -164,7 +165,7 @@ const AdminCommentsModal = (props) => {
       setShowUpdateReviewModal(false);
       props.onShow();
     } catch {
-      navigation("/error", {});
+      navigation("/error");
     }
   }
 
@@ -189,7 +190,7 @@ const AdminCommentsModal = (props) => {
       setShowConfirmModal(false);
       props.onShow();
     } catch {
-      navigation("/error", {});
+      navigation("/error");
     }
   };
 
@@ -204,7 +205,7 @@ const AdminCommentsModal = (props) => {
       setSelectedReview(null);
       props.onShow();
     } catch {
-      navigation("/error", {});
+      navigation("/error");
     }
   };
 
@@ -225,7 +226,7 @@ const AdminCommentsModal = (props) => {
       setDisplayData(data);
       await createReviewLike(id);
     } catch {
-      navigator("/error", {});
+      navigator("/error");
     }
   }
 
@@ -244,7 +245,7 @@ const AdminCommentsModal = (props) => {
       setDisplayData(data);
       await removeReviewLike(id);
     } catch {
-      navigator("/error", {});
+      navigator("/error");
     }
   }
 
@@ -265,7 +266,7 @@ const AdminCommentsModal = (props) => {
       setDisplayData(data);
       await createReviewDislike(id);
     } catch {
-      navigator("/error", {});
+      navigator("/error");
     }
   }
 
@@ -284,7 +285,7 @@ const AdminCommentsModal = (props) => {
       setDisplayData(data);
       await removeReviewDislike(id);
     } catch {
-      navigator("/error", {});
+      navigator("/error");
     }
   }
 
@@ -314,7 +315,7 @@ const AdminCommentsModal = (props) => {
       await createRestriction(restriction);
 
     } catch {
-      navigation("/error", {});
+      navigation("/error");
     }
   }
 
@@ -338,7 +339,7 @@ const AdminCommentsModal = (props) => {
       await activateUserAccount(userId);
 
     } catch {
-      navigation("/error", {});
+      navigation("/error");
     }
   }
 
@@ -355,8 +356,25 @@ const AdminCommentsModal = (props) => {
     </Popover>
   );
 
-  if (props.data !== null || displayData === null)
-    return <Loading />
+  const closeModal = () => {
+    props.onClose();
+
+    setTimeout(() => {
+      setDisplayData(null);
+      setSortOrder('newest');
+      setSelectedReview(null);
+      setShowAddReviewModal(false);
+      setShowUpdateReviewModal(false);
+      setShowConfirmModal(false);
+      setshowUnlockUserModal(false);
+      setShowDeleteUsersReviewModal(false);
+      setShowIssueRestrictionModal(false);
+      setUsersReview(null);
+    }, 300);
+  };
+
+  if (props.data === null || displayData === null)
+    return;
 
   return (
     <div>
@@ -371,7 +389,7 @@ const AdminCommentsModal = (props) => {
           <Modal.Title className="me-auto text-nowrap" id="contained-modal-title-vcenter">
             {props.data.name}
           </Modal.Title>
-          <button type="button" class="btn-close" aria-label="Close" onClick={() => props.onClose()}></button>
+          <button type="button" class="btn-close" aria-label="Close" onClick={closeModal}></button>
           <div className="d-flex flex-column justify-content-end flex-md-row w-100 gap-2">
             <Button
               className="w-100 w-md-auto"

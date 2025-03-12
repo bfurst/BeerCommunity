@@ -22,8 +22,7 @@ export default function DeleteAccount() {
             await deleteAccount(token);
             logout();
         } catch (exception){
-            // log
-            navigation("/error", {});
+            navigation("/error");
         }
     };
 

@@ -65,8 +65,7 @@ export default function AdminBreweries() {
 
             setCountries([defaultOption, ...countries]);
         } catch {
-            //
-            navigation("/error", {});
+            navigation("/error");
         }
     };
 
@@ -92,7 +91,7 @@ export default function AdminBreweries() {
             setLength(breweries["length"]);
             setDisplayData(breweries["data"]);
         } catch {
-            //
+            navigation("/error");
         }
     };
 
@@ -133,7 +132,7 @@ export default function AdminBreweries() {
             await createBrewery(formData);
             fill(page);
         } catch {
-            //
+            navigation("/error");
         }
     }
 
@@ -181,7 +180,7 @@ export default function AdminBreweries() {
             }
 
         } catch {
-
+            navigation("/error");
         }
     }
 
@@ -345,7 +344,7 @@ export default function AdminBreweries() {
 
             <ConfirmModal
                 show={showConfirmModal}
-                message="Are you sure you want to delete news?"
+                message="Are you sure you want to delete brewery?"
                 reviewId={selectedBrewery !== null && selectedBrewery.id}
                 onConfirm={removeBrewery}
                 onClose={() => setShowConfirmModal(false)}

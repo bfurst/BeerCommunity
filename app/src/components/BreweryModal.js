@@ -31,7 +31,7 @@ function BreweryModal(props) {
   const [submitDisabled, setSubmitDisabled] = React.useState(null);
 
   useEffect(() => {
-    fill();
+    getBreweryData();
   }, []);
 
   useEffect(() => {
@@ -68,12 +68,12 @@ function BreweryModal(props) {
       setSubmitDisabled(true);
   }, [titleValid, descriptionValid, linkValid, yearFoundedValid, image])
 
-  const fill = async () => {
+  const getBreweryData = async () => {
     try {
       const countries = await getCountries();
       setCountries(countries);
     } catch {
-      navigation("/error", {});
+      navigation("/error");
     }
   };
 
@@ -123,7 +123,7 @@ function BreweryModal(props) {
   };
 
   if (countries === null || displayCountry === '')
-    return <Loading />;
+    return;
 
   return (
     <Modal
@@ -166,7 +166,7 @@ function BreweryModal(props) {
                       }}
                     />
                   ) : (
-                    <p>Povucite sliku ovdje ili kliknite za učitavanje</p>
+                    <p>Drag & drop the image here or click to upload</p>
                   )}
                 </div>
                 <p className="text-danger" style={{ fontSize: 10 }}>{fileErrorMsg}</p>
@@ -210,7 +210,7 @@ function BreweryModal(props) {
                 <TextBox.Url
                   value={props.data && props.data.url}
                   placeholder={"Unesite URL"}
-                  regex={/^(https?:\/\/)?(www\.)?[a-zA-Z0-9-]+\.[a-zA-Z]{2,}(\/\S*)?$/}
+                  regex={/[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/}
                   errorMessage={"Web link is not valid URL!"}
                   setData={(text, isValid) => { setLink(text); setLinkValid(isValid) }}
                 />

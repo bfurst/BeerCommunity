@@ -3,17 +3,15 @@ import { Modal, Button, Dropdown, DropdownButton, Form } from 'react-bootstrap';
 import { createReview, createReviewReport, updateReview } from '../services/Api';
 import * as Icon from 'react-bootstrap-icons';
 import { useAuth } from './AuthContext';
-import { useNavigate } from 'react-router-dom';
 
 const WriteReviewModal = (props) => {
   const { user } = useAuth();
-  const navigation = useNavigate();
   
   const [rating, setRating] = React.useState(-1);
   const [comment, setComment] = React.useState("");
   const [disableSubmit, setDisableSubmit] = React.useState(true);
 
-  useEffect(() => {
+  useEffect(() => {    
     if (props.data !== null) {
       setRating(props.data.rating);
       setComment(props.data.description);
@@ -45,17 +43,13 @@ const WriteReviewModal = (props) => {
     }, 300);
   };
 
-  const confirm = async () => {
-    try {
+  const confirm = () => {
       const review = {
         "rating": rating,
         "description": comment
       }
 
       props.onConfirm(review);
-    } catch {
-      navigation("/error", {});
-    }
   };
 
   const fillStars = () => {

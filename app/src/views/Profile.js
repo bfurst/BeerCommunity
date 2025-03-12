@@ -20,7 +20,7 @@ import { Loading } from '../components/Loading';
 
 export default function Profile() {
     const { user, updateUserProfileImage } = useAuth();
-    const navigate = useNavigate();
+    const navigation = useNavigate();
 
     const [image, setImage] = useState(null);
     const [reviewsCount, setReviewsCount] = useState(null);
@@ -40,7 +40,7 @@ export default function Profile() {
             const numberOfReviews = await countReviews();
             setReviewsCount(numberOfReviews);
         } catch {
-            navigate("/error");
+            navigation("/error");
         }
     };
 
@@ -52,7 +52,7 @@ export default function Profile() {
             const uploadedImage = await uploadProfileImage(formData);
             updateUserProfileImage(uploadedImage.fullName);
         } catch {
-            navigate("/error");
+            navigation("/error");
         }
     };
 
@@ -62,7 +62,7 @@ export default function Profile() {
             setImage(null);
             updateUserProfileImage(null);
         } catch {
-            navigate("/error");
+            navigation("/error");
         }
     };
 
@@ -165,7 +165,7 @@ export default function Profile() {
                     </Card.Body>
                     <Card.Footer className="d-flex justify-content-between" style={{ backgroundColor: "transparent", border: "none" }}>
                         <Button variant="primary" onClick={() => setShowEmailResetModal(true)}>Change Email</Button>
-                        <Button variant="warning" onClick={() => navigate("/verification-required", { state: { email: user.email, type: "pswd-reset" } })}>
+                        <Button variant="warning" onClick={() => navigation("/verification-required", { state: { email: user.email, type: "pswd-reset" } })}>
                             Reset Password
                         </Button>
                         <Button variant="danger" onClick={() => setShowAccountDeleteModal(true)}>Delete Account</Button>
@@ -176,7 +176,7 @@ export default function Profile() {
             <ConfirmModal
                 show={showAccountDeleteModal}
                 message={"Are you sure you want to permanently delete your account?"}
-                onConfirm={() => navigate("/verification-required", { state: { email: user.email, type: "delete-account" } })}
+                onConfirm={() => navigation("/verification-required", { state: { email: user.email, type: "delete-account" } })}
                 onClose={() => setShowAccountDeleteModal(false)}
             />
             <ResetEmailModal show={showEmailResetModal} onClose={() => setShowEmailResetModal(false)} />

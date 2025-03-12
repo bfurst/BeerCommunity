@@ -15,7 +15,7 @@ import { resetPassword } from '../services/Api';
 
 export default function EmailSent() {
     const { token } = useParams();
-    const navigate = useNavigate();
+    const navigation = useNavigate();
 
     const [pswd, setPswd] = useState("");
     const [showPswd, setShowPswd] = useState(false);
@@ -41,9 +41,9 @@ export default function EmailSent() {
         try {
             const data = { password: pswd, token };
             await resetPassword(data);
-            navigate("/login");
+            navigation("/login");
         } catch {
-            navigate("/error");
+            navigation("/error");
         }
     };
 

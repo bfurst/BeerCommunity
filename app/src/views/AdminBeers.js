@@ -79,7 +79,7 @@ export default function AdminBeers() {
             const categories = await getBeerCategories();
             const shades = await getBeerShades();
             const reportCategories = await getReportCategories();
-            const restrictionCategories = await getRestrictionCategories(); 
+            const restrictionCategories = await getRestrictionCategories();
             setBrewery(brewery);
             setCategories(categories);
             setShades(shades);
@@ -99,7 +99,7 @@ export default function AdminBeers() {
             setDisplayCategories([defaultCategoryOption, ...categories]);
             setDisplayShades([defaultShadeOption, ...shades]);
         } catch {
-            //
+            navigation("/error");
         }
     };
 
@@ -109,8 +109,13 @@ export default function AdminBeers() {
             setLength(beers["length"]);
             setDisplayData(beers["data"]);
         } catch {
-            //
+            navigation("/error");
         }
+    };
+
+    const getBeerShade = (shadeId) => {
+        const shade = shades.find(sh => sh.id === shadeId);
+        return shade.shade;
     };
 
     const sortData = (data) => {
@@ -149,7 +154,7 @@ export default function AdminBeers() {
             setLength(beers["length"]);
             setDisplayData(beers["data"]);
         } catch {
-            //
+            navigation("/error");
         }
     };
 
@@ -161,7 +166,7 @@ export default function AdminBeers() {
             setLength(beers["length"]);
             setDisplayData(beers["data"]);
         } catch {
-            //
+            navigation("/error");
         }
     }
 
@@ -181,7 +186,7 @@ export default function AdminBeers() {
 
             sortData(newData);
         } catch {
-            //
+            navigation("/error");
         }
     }
 
@@ -196,13 +201,8 @@ export default function AdminBeers() {
 
             sortData(newData);
         } catch {
-            //
+            navigation("/error");
         }
-    }
-
-    const showBeerComments = (beer) => {
-        setSelectedBeer(beer);
-        setTimeout(() => { setShowComments(true) }, 100)
     }
 
     const addBeer = async (data) => {
@@ -278,7 +278,7 @@ export default function AdminBeers() {
             }
 
         } catch {
-            
+            navigation("/error");
         }
     }
 
@@ -403,7 +403,7 @@ export default function AdminBeers() {
                                                             <Icon.MenuApp size={24} />
                                                         </Dropdown.Toggle>
                                                         <Dropdown.Menu>
-                                                            <Dropdown.Item eventKey="1" onClick={() => showBeerComments(beer)}>Comments</Dropdown.Item>
+                                                            <Dropdown.Item eventKey="1" onClick={() => { setSelectedBeer(beer); setShowComments(true) }}>Comments</Dropdown.Item>
                                                             {
                                                                 beer.isFavorite ?
                                                                     <Dropdown.Item eventKey="2" onClick={() => unmarkFavorite(beer.id)}>Remove from favorites</Dropdown.Item> :
@@ -416,7 +416,7 @@ export default function AdminBeers() {
                                                     </Dropdown>
                                                 </div>
                                                 <p>
-                                                    <small style={{ color: "grey" }}>{displayShades[beer.shadeId].shade}</small>
+                                                    <small style={{ color: "grey" }}>{getBeerShade(beer.shadeId)}</small>
                                                     <small className="ms-3" style={{ color: "grey" }}>{beer.alcoholPercentage + "% ALC"}</small>
                                                 </p>
                                                 <Card.Text className="text-muted h-25">{beer.description}</Card.Text>

@@ -21,19 +21,14 @@ const ReportCommentModal = (props) => {
     validateSubmit();
   }, [category, description]);
 
-  const sendReport = async () => {
-    try {
+  const confirm = async () => {
+
       const report = {
-        "reviewId": props.reviewId,
         "categoryId": category,
         "description": description
       };
 
-      await createReviewReport(report);
-      props.onReportSent();
-    } catch {
-      navigation("/error", {});
-    }
+      props.onConfirm(report);
   };
 
   const validateSubmit = () => {
@@ -85,7 +80,7 @@ const ReportCommentModal = (props) => {
         </Button>
         <Button
           variant="primary"
-          onClick={() => sendReport()}
+          onClick={() => confirm()}
           disabled={disableSubmit}
         >
           Submit Report
